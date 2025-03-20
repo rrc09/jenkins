@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="34bed7ad-2e62-41f2-94c9-d32c3925aea8" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="jenkinsFlow" doc:id="0d0ab6e3-9895-4726-80ae-d409cd0a81bb" >
+		<http:listener doc:name="Listener" doc:id="ba91a8e8-570e-43b7-8488-e9423cc37800" config-ref="HTTP_Listener_config" path="/jenkins"/>
+		<ee:transform doc:name="Transform Message" doc:id="e7ce787f-b92a-47b0-bc44-7ae7cbdf4909" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Status":"Success"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="6262c380-948f-46d9-bee6-7afd698be546" message='#["End of the Jenkins flow"]'/>
+	</flow>
+</mule>
