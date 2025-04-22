@@ -35,3 +35,4 @@ bat ‘mvn deploy -DmuleDeploy -Dusername=%ANYPOINT_CREDENTIALS_USR% -Dpassword=
 }
 
 }
+
